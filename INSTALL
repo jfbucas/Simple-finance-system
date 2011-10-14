@@ -13,7 +13,7 @@ The Debian way
 5. Change images/seal.gif
 6. Redesign forms/er_template.png and forms/po_templates.png
 7. Point your Apache and PHP to the right location (see below)
-
+8. Connect to the system with admin/admin
 
 
 
