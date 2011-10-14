@@ -1,0 +1,7 @@
+This is the working directory for the Forms Overlay functions. Make sure to
+set this directory permissions to read/write/scan everyone (chmod 777 var).
+
+Print jobs are created here before being sent off to the printer and then
+deleted when done. This should be the only file in this directory under
+normal circumstances.
+

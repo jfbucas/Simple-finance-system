@@ -1,0 +1,79 @@
+Installation steps
+------------------
+
+The Debian way
+ # aptitude install apache2 libapache2-mod-gnutls libapache2-mod-php5 phpmyadmin imagemagick 
+ # a2enmod include 
+
+0. Get Git repository
+1. Create database
+2. Import tables from sql/struct.sql
+3. Import roles from sql/data.sql
+4. Configure config.inc.php  based on config.inc.php.example.php
+5. Change images/seal.gif
+6. Redesign forms/er_template.png and forms/po_templates.png
+7. Point your Apache and PHP to the right location (see below)
+
+
+
+
+
+
+Apache configuration example
+----------------------------
+
+<VirtualHost *:80>
+        ServerAdmin sysadmin@company.email.org
+        ServerName company.url.org
+	ServerAlias finance
+        Redirect permanent / https://company.url.org
+</VirtualHost>
+
+<VirtualHost *:443>
+        ServerAdmin sysadmin@company.email.org
+        DocumentRoot /var/www/company.url.org
+        ServerName company.url.org
+        ServerAlias company.url.org
+
+        <Directory /var/www/company.url.org>
+                Options Includes
+                AllowOverride FileInfo
+                Order Deny,Allow
+                Deny from All
+#                Allow from All
+                Allow from x.x.x.x/255.255.255.0
+	  	Allow from xxxx:xx:xx:x:0:0:0:0/64
+       </Directory>
+        ErrorLog /var/log/apache2/company.url.org.error.log
+        CustomLog /var/log/apache2/company.url.org.access.log combined
+
+        SSLEngine on
+        SSLCertificateFile 'key.pem'
+	SSLCertificateChainFile ca
+
+</VirtualHost>
+
+<VirtualHost *:446>
+        ServerAdmin sysadmin@company.email.org
+        DocumentRoot /var/www/company-test.url.org
+        ServerName company.url.org
+        ServerAlias company.url.org
+
+        <Directory /var/www/company-test.url.org>
+                Options Includes
+                AllowOverride FileInfo
+                Order Deny,Allow
+                Deny from All
+                Allow from x.x.x.x/255.255.255.0
+	  	Allow from xxxx:xx:xx:x:0:0:0:0/64
+        </Directory>
+        ErrorLog /var/log/apache2/company-test.url.org.error.log
+        CustomLog /var/log/apache2/company-test.url.org.access.log combined
+
+        SSLEngine on
+        SSLCertificateFile 'key.pem'
+	SSLCertificateChainFile 'ca'
+
+</VirtualHost>
+
+
